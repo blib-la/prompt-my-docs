@@ -18,7 +18,7 @@ Add all the files that you want to search into the [docs](/docs) folder (current
 
 For example you can clone a repo that you would love to learn about into the [docs](/docs) folder, like [hyv](https://github.com/failfa-st/hyv). 
 
-When you have prepared your data, you can add the it into the vector database:
+When you have prepared your data, you can add it into the vector database:
 
 ```shell
 # Populate the database. This only needs to be done once for a new database.
@@ -35,7 +35,7 @@ When the vector database is ready, you can start the web app:
 npm run dev
 ```
 
-Open the web app via [localhost:3000](localhost:3000) (or similar based on your setup). 
+Open the web app via [localhost:3000](http://localhost:3000) (or similar based on your setup). 
 
 ## Under the hood
 
