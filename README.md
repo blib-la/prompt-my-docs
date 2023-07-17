@@ -6,7 +6,7 @@ Have you ever found a new library and wanted to ask questions about it? Then loo
 
 ## Setup
 
-* Clone the project or download the ZIP
+* [Clone the project](https://github.com/failfa-st/prompt-my-docs) or [download the ZIP](https://github.com/failfa-st/prompt-my-docs/archive/refs/heads/main.zip)
 * Install dependencies: `npm i`
 * Register for a [Weaviate sandbox](https://weaviate.io/developers/weaviate/quickstart#create-a-weaviate-instance) and obtain the host of your sandbox and the API Key
 * Create an OpenAI account and create an [API Key](https://platform.openai.com/account/api-keys)
