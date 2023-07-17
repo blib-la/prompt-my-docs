@@ -1,8 +1,6 @@
 import { useAtom } from "jotai";
 import { RefObject, useEffect } from "react";
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import { scrollSpyAtom } from "@/docs/atoms";
 
 export function useScrollSpy(ref: RefObject<HTMLDivElement>) {

@@ -2,34 +2,19 @@ import { Avatar, ListItemDecorator, Option, Select, SelectOption } from "@mui/jo
 import { useAtom } from "jotai";
 import type { SyntheticEvent } from "react";
 
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-ignore
 import { languageAtom } from "@/docs/atoms";
-// @ts-ignore
 import FlagCn from "@/docs/components/flags/cn";
-// @ts-ignore
 import FlagCz from "@/docs/components/flags/cz";
-// @ts-ignore
 import FlagDe from "@/docs/components/flags/de";
-// @ts-ignore
 import FlagEs from "@/docs/components/flags/es";
-// @ts-ignore
 import FlagFr from "@/docs/components/flags/fr";
-// @ts-ignore
 import FlagIt from "@/docs/components/flags/it";
-// @ts-ignore
 import FlagJp from "@/docs/components/flags/jp";
-// @ts-ignore
 import FlagNl from "@/docs/components/flags/nl";
-// @ts-ignore
 import FlagPirate from "@/docs/components/flags/pirate";
-// @ts-ignore
 import FlagPl from "@/docs/components/flags/pl";
-// @ts-ignore
 import FlagPt from "@/docs/components/flags/pt";
-// @ts-ignore
 import FlagUs from "@/docs/components/flags/us";
-/* eslint-enable @typescript-eslint/ban-ts-comment */
 
 const options = [
 	{ id: "en-US", value: "english", flag: <FlagUs />, label: "English" },

@@ -1,8 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-ignore
-// @ts-ignore
-
-// @ts-ignore
 import { DotLottiePlayer } from "@dotlottie/react-player";
 import { Box, Card, CardContent, Checkbox, Container, Modal } from "@mui/joy";
 import axios from "axios";
@@ -15,16 +10,10 @@ import {
 	loadingAtom,
 	modalAtom,
 	questionAtom,
-	// @ts-ignore
 } from "@/docs/atoms";
-// @ts-ignore
 import { ChatInput } from "@/docs/components/chat-input";
-// @ts-ignore
 import { LanguageSelect } from "@/docs/components/language-select";
-// @ts-ignore
 import { SimpleMarkdown } from "@/docs/components/markdown";
-
-/* eslint-enable @typescript-eslint/ban-ts-comment */
 import "@dotlottie/react-player/dist/index.css";
 
 interface Guide {
@@ -68,8 +57,6 @@ export function Bot({
 				question,
 				language,
 			});
-
-			console.log(data);
 
 			if (onAnswer) {
 				onAnswer(data);

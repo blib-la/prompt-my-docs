@@ -1,22 +1,13 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import LinkIcon from "@mui/icons-material/Link";
 import { Box, Link, List, ListItem, ListItemDecorator, Typography } from "@mui/joy";
 import slugify from "@sindresorhus/slugify";
 import { useAtom } from "jotai";
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import NextLink from "next/link";
 import { useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import type { Components } from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import { scrollSpyAtom } from "@/docs/atoms";
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import { useScrollSpy } from "@/docs/hooks/scroll-spy";
 
 function SpyTypography({ children, ...props }) {

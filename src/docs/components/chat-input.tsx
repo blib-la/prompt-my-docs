@@ -1,15 +1,9 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-ignore
 import FullscreenIcon from "@mui/icons-material/Fullscreen";
-// @ts-ignore
 import SendIcon from "@mui/icons-material/Send";
 import { Box, CircularProgress, IconButton, Textarea } from "@mui/joy";
 import { useAtom } from "jotai";
 import { useState } from "react";
-
-// @ts-ignore
 import { questionAtom } from "@/docs/atoms";
-/* eslint-enable @typescript-eslint/ban-ts-comment */
 
 export interface ChatInputProps {
 	loading: boolean;

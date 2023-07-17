@@ -1,9 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-ignore
 import { ama } from "@/docs/agents/ama";
-/* eslint-enable @typescript-eslint/ban-ts-comment */
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
 	switch (request.method) {
