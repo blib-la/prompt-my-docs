@@ -41,7 +41,7 @@ export function LanguageSelect() {
 		return (
 			<>
 				<ListItemDecorator sx={{ mr: 1 }}>
-					<Avatar variant="outlined" size="sm">
+					<Avatar variant="outlined" size="sm" sx={{ "--Avatar-size": "20px" }}>
 						{options.find(o => o.value === option.value)?.flag}
 					</Avatar>
 				</ListItemDecorator>
@@ -65,7 +65,7 @@ export function LanguageSelect() {
 			{options.map(option => (
 				<Option key={option.id} value={option.value}>
 					<ListItemDecorator>
-						<Avatar variant="outlined" size="sm">
+						<Avatar variant="outlined" size="sm" sx={{ "--Avatar-size": "20px" }}>
 							{option.flag}
 						</Avatar>
 					</ListItemDecorator>
