@@ -10,6 +10,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "toc": "npx markdown-toc README.md -i",
     "update-database": "npx ts-node-esm src/utils/update-database.ts"
   },
   "dependencies": {
