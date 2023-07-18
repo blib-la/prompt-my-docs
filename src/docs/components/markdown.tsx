@@ -2,25 +2,26 @@ import { Box, Link, List, ListItem, ListItemDecorator, Typography } from "@mui/j
 import ReactMarkdown from "react-markdown";
 import type { Components } from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { dark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 
 export const simpleComponents = {
 	h1({ children }) {
 		return (
-			<Typography level="h1" my={2.5}>
+			<Typography level="h1" my={3.5}>
 				{children}
 			</Typography>
 		);
 	},
 	h2({ children }) {
 		return (
-			<Typography level="h2" my={2}>
+			<Typography level="h2" mb={1.0} mt={6.0}>
 				{children}
 			</Typography>
 		);
 	},
 	h3({ children }) {
 		return (
-			<Typography level="h3" my={1.5}>
+			<Typography level="h3" mb={1.0} mt={5.0}>
 				{children}
 			</Typography>
 		);
@@ -88,7 +89,7 @@ export const simpleComponents = {
 		return !inline && match ? (
 			<Box className="prismjs">
 				<SyntaxHighlighter
-					style={{}}
+					style={dark}
 					language={match[1]}
 					PreTag={({ children }) => <>{children}</>}
 				>
