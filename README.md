@@ -49,4 +49,6 @@ Open the web app via [localhost:3000](http://localhost:3000) (or similar based o
 
 ## Do I have to use Next.js?
 
-You don't need Next.js to use the prompt-my-docs, we just use it, as it's a nice way to have a web app running. You can also just extract the parts that you need and use them without Next.js in your website. We just hadn't the requirement yet. But if you need help here, please open an issue and we are happy to extract the parts that are needed, so you can use them in any environment. 
+You don't need Next.js to use the prompt-my-docs, we just use it, as it's a nice way to have a web app running. You can also just extract the parts that you need and use them without Next.js on your website. We just hadn't the requirement yet. But if you need help here, please open an issue and we are happy to extract the parts that are needed, so you can use them in any environment. 
+
+We are using an [API route from Next.js](/src/pages/api/ama.ts), so that the request to GPT happens on the server and we don't have to expose the secrets to the client. But you could write your own API and use everything else without Next.js at all. 
