@@ -1,4 +1,3 @@
-import FullscreenIcon from "@mui/icons-material/Fullscreen";
 import SendIcon from "@mui/icons-material/Send";
 import { Box, CircularProgress, IconButton, Textarea } from "@mui/joy";
 import { useAtom } from "jotai";
@@ -24,7 +23,7 @@ export function ChatInput({ loading, onSubmit }: ChatInputProps) {
 		>
 			<Textarea
 				name="question"
-				placeholder="How can I get started with Hyv and gpt-4?"
+				placeholder="Your question goes here 🤓"
 				aria-label="Write your question and press Enter to sumbit"
 				minRows={1}
 				maxRows={focus ? 20 : 1}
