@@ -42,6 +42,13 @@ const theme = extendTheme({
 					"800": "#115e59",
 					"900": "#134e4a",
 				},
+				background: {
+					body: "var(--joy-palette-neutral-600, #5A5A72)",
+					surface: "var(--joy-palette-neutral-700, #434356)",
+				},
+				neutral: {
+					softHoverBg: "var(--joy-palette-neutral-600, #5A5A72)",
+				},
 			},
 		},
 	},
@@ -91,7 +98,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 					},
 					".prismjs": {
 						fontSize: "var(--prism-block-font-size)",
-						padding: "var(--prism-block-padding-y) var(--prism-block-padding-x)",
+						padding: ".5rem",
 						margin: "var(--prism-block-margin-y) var(--prism-block-margin-x)",
 						borderRadius: "var(--prism-block-radius)",
 						overflow: "auto",
