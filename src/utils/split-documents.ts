@@ -1,5 +1,5 @@
 import { Document } from "langchain/document";
-import { JavaScriptTextSplitter } from "../docs/splitter/JavaScriptTextSplitter.js";
+import { JavaScriptTextSplitter } from "../docs/splitter/javascript-text-splitter.js";
 import { MarkdownTextSplitter } from "langchain/text_splitter";
 import { TYPE_MARKDOWN, TYPE_TYPESCRIPT } from "../docs/weaviate.js";
 

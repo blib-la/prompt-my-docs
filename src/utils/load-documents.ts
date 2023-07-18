@@ -1,5 +1,5 @@
 import { Document } from "langchain/document";
-import { DirectoryLoaderPro } from "../docs/loaders/DirectoryLoaderPro.js";
+import { DirectoryLoaderPro } from "../docs/loaders/directory-loader-pro.js";
 import { IGNORE_PATHS, PATH_DOCS, TYPE_MARKDOWN, TYPE_TYPESCRIPT } from "../docs/weaviate.js";
 import { UnknownHandling } from "langchain/document_loaders/fs/directory";
 import { TextLoader } from "langchain/document_loaders/fs/text";
