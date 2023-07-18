@@ -9,10 +9,9 @@ export interface ChatInputProps {
 	loading: boolean;
 
 	onSubmit(): void;
-	onExpand?(): void;
 }
 
-export function ChatInput({ loading, onSubmit, onExpand }: ChatInputProps) {
+export function ChatInput({ loading, onSubmit }: ChatInputProps) {
 	const [question, setQuestion] = useAtom(questionAtom);
 	const [focus, setFocus] = useState(false);
 	return (
@@ -46,22 +45,8 @@ export function ChatInput({ loading, onSubmit, onExpand }: ChatInputProps) {
 					},
 					".MuiTextarea-textarea": {
 						pr: 5,
-						pl: onExpand ? 5 : undefined,
 					},
 				}}
-				startDecorator={
-					onExpand ? (
-						<IconButton
-							variant="solid"
-							aria-label="Expand"
-							onClick={() => {
-								onExpand();
-							}}
-						>
-							<FullscreenIcon />
-						</IconButton>
-					) : undefined
-				}
 				endDecorator={
 					<IconButton
 						disabled={loading}
