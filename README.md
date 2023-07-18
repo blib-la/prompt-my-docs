@@ -1,8 +1,31 @@
-# prompt my docs
+# Prompt my Docs
 
 > Ask questions about any data using GPT. 
 
-Have you ever found a new library and wanted to ask questions about it? Then look no further, as you can put anything inside of [docs](/docs), add the data into a vector database and start prompting in a web app.
+Have you ever found a new library and wanted to ask questions about it? Then look no further, as you can put any data inside of [docs](/docs) and start prompting. 
+
+[![Discord](https://img.shields.io/discord/1091306623819059300?color=7289da&label=Discord&logo=discord&logoColor=fff&style=for-the-badge)](https://discord.com/invite/m3TBB9XEkb)
+
+---
+
+<!-- toc -->
+
+- [In Action](#in-action)
+- [Setup](#setup)
+- [Bring your docs](#bring-your-docs)
+- [Start prompt-my-docs](#start-prompt-my-docs)
+- [Under the hood](#under-the-hood)
+- [Do I have to use Next.js?](#do-i-have-to-use-nextjs)
+
+<!-- tocstop -->
+
+---
+
+## In Action
+
+![Prompt my Docs using hyv](/public/prompt_my_docs_get_started_with_hyv.png)
+
+
 
 ## Setup
 
@@ -51,4 +74,4 @@ Open the web app via [localhost:3000](http://localhost:3000) (or similar based o
 
 You don't need Next.js to use the prompt-my-docs, we just use it, as it's a nice way to have a web app running. You can also just extract the parts that you need and use them without Next.js on your website. We just hadn't the requirement yet. But if you need help here, please open an issue and we are happy to extract the parts that are needed, so you can use them in any environment. 
 
-We are using an [API route from Next.js](/src/pages/api/ama.ts), so that the request to GPT happens on the server and we don't have to expose the secrets to the client. But you could write your own API and use everything else without Next.js at all. 
+We are using an [API route from Next.js](/src/pages/api/ama.ts), so that the request to GPT happens on the server and we don't have to expose the secrets to the client. But you could write your own API and use everything else without Next.js at all.
