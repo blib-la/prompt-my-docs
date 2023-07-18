@@ -60,9 +60,8 @@ const agent = new Agent(
 		),
 	}),
 	{
-		// We add the store here so that all answers are vectorized
 		store,
-		verbosity: 1337,
+		verbosity: 0,
 	}
 );
 
@@ -76,6 +75,14 @@ function extractResults(resultsObject: ResultsObject, key: string) {
 	return resultsObject.data.Get[key];
 }
 
+function extractPaths(docs: any[]) {
+	return docs
+		.map(doc => doc.path)
+		.filter((value, index, self) => {
+			return self.indexOf(value) === index;
+		});
+}
+
 export async function ama({ question, language }: { question: string; language: string }) {
 	const task = {
 		message: `Question: ${question}`,
@@ -84,7 +91,7 @@ export async function ama({ question, language }: { question: string; language: 
 
 	const docsResults = await store.searchNearText(DOCS, "content path", [question], {
 		distance: 0.24,
-		limit: 8,
+		limit: 7,
 	});
 	console.log("✅  Done getting docs");
 
@@ -106,12 +113,17 @@ export async function ama({ question, language }: { question: string; language: 
 		originalQuestion: task.message,
 	});
 
-	return agent.assign(
-		{
-			...task,
-			previousAnswers: extractResults(answerResults, ANSWER),
-			docs: extractResults(docsResults, DOCS),
-		},
-		ANSWER
-	);
+	const docs = extractResults(docsResults, DOCS);
+
+	return {
+		message: agent.assign(
+			{
+				...task,
+				previousAnswers: extractResults(answerResults, ANSWER),
+				docs,
+			},
+			ANSWER
+		),
+		paths: extractPaths(docs),
+	};
 }
