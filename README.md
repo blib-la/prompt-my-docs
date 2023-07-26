@@ -116,7 +116,9 @@ The default config looks like this:
 
 ### Change the config
 
-You can override the default configuration by creating a `config.json` file at the root of the project.
+You can override the default configuration by creating a `config.json` file at the root of the project. This comes in handy if the default settings make no sense for the docs that you want to use. For example, it might be, that the code files are large, so it's better to have bigger chunks and fewer files. 
+
+We have covered some of the default cases, so feel free to change the config accordingly to your use case. 
 
 ### Disabling a file type like `markdown`
 
