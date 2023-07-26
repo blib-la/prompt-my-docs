@@ -43,7 +43,7 @@ Have you ever found a new library and wanted to ask questions about it? Then loo
   
 ## Bring your docs
 
-Add all the files that you want to search into the [docs](/docs) folder (currently supported are: ts, md and mdx, please open an issue for more!)
+Add all the files that you want to search into the [docs](/docs) folder (currently only all `fileTypes` (like `js`, `ts` or `md`) that are defined in the [config](#config), please open an issue for more!)
 
 For example you can clone a repo that you would love to learn about into the [docs](/docs) folder, like [hyv](https://github.com/failfa-st/hyv). 
 
@@ -68,7 +68,7 @@ Open the web app via [localhost:3000](http://localhost:3000) (or similar based o
 
 ## Under the hood
 
-* We read all your data from the "docs" folder, currently only ts, md, and mdx
+* We read all your data from the "docs" folder, currently only all `fileTypes` (like `js`, `ts` or `md`) that are defined in the [config](#config)
 * Your data will be converted into a vector and saved into the vector database (e.g. weaviate)
   * This needs to be done before you run the project for the first time or when your data is changing
 * You can then run the project and open the web app
