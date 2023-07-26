@@ -16,6 +16,7 @@ Have you ever found a new library and wanted to ask questions about it? Then loo
 - [Start prompt-my-docs](#start-prompt-my-docs)
 - [Under the hood](#under-the-hood)
 - [Config](#config)
+  * [Change the config](#change-the-config)
   * [Disabling a File Type](#disabling-a-file-type)
   * [Changing ignorePaths](#changing-ignorepaths)
   * [Changing maxDocs and chunkSize](#changing-maxdocs-and-chunksize)
@@ -113,8 +114,9 @@ The default config looks like this:
 }
 ```
 
+### Change the config
 
-You can override the default configuration by creating a `config.json` file in the root of the project.
+You can override the default configuration by creating a `config.json` file at the root of the project.
 
 ### Disabling a File Type
 
