@@ -30,6 +30,8 @@ Have you ever found a new library and wanted to ask questions about it? Then loo
 
 ## In Action
 
+We cloned [hyv](https://github.com/failfa-st/hyv) into the [docs](/docs) folder and used the prompt `Getting started example code for hyv in typescript so that I can use GPT-4 and ask a question.` to generate a guide on how to get started. 
+
 ![Prompt my Docs using hyv](/public/prompt_my_docs_get_started_with_hyv.png)
 
 
