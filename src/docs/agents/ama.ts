@@ -3,13 +3,14 @@ import { inspect } from "node:util";
 import { Agent } from "@hyv/core";
 import { GPTModelAdapter } from "@hyv/openai";
 import { createInstructionPersona } from "@hyv/openai";
-import { config } from "dotenv";
+import { config as dotenvconfig } from "dotenv";
+import { config } from "@/config/config";
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { ANSWER, DOCS, store } from "@/docs/weaviate";
 
-config();
+dotenvconfig();
 
 inspect.defaultOptions.depth = null;
 
@@ -90,15 +91,15 @@ export async function ama({ question, language }: { question: string; language: 
 	};
 
 	const docsResults = await store.searchNearText(DOCS, "content path", [question], {
-		distance: 0.24,
-		limit: 7,
+		distance: config.get("vectorDatabase.docSearchDistance"),
+		limit: config.get("vectorDatabase.maxDocs"),
 	});
 	console.log("✅  Done getting docs");
 
 	let answerResults = { data: { Get: { [ANSWER]: [] } } };
 	try {
 		answerResults = await store.searchNearText(ANSWER, "answer", [question], {
-			distance: 0.24,
+			distance: config.get("vectorDatabase.answerSearchDistance"),
 			limit: 1,
 		});
 		console.log("✅  Done getting answers");

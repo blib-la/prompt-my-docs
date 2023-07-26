@@ -2,21 +2,26 @@ import { TYPE_MARKDOWN, TYPE_TYPESCRIPT } from "../docs/weaviate.js";
 import { loadDocuments } from "./load-documents.js";
 import { splitDocuments } from "./split-documents.js";
 import { fillVectorDatabase } from "./fill-vector-database.js";
+import { config } from "../config/config.js";
 
 export async function populate(force = false) {
 	// If we want to refresh (force) the new dataset, we need to populate the vector store
 	if (force) {
-		const docs = await loadDocuments(TYPE_TYPESCRIPT);
-		const chunkedDocs = await splitDocuments(TYPE_TYPESCRIPT, docs);
-		await fillVectorDatabase(chunkedDocs);
+		const fileTypes = config.get("fileTypes");
 
-		console.log(`${docs.length} typescript files`);
+		for (const fileType in fileTypes) {
+			if (fileTypes[fileType].enabled) {
+				try {
+					const docs = await loadDocuments(fileType);
+					const chunkedDocs = await splitDocuments(fileType, docs);
+					await fillVectorDatabase(chunkedDocs);
 
-		const docsMarkdown = await loadDocuments(TYPE_MARKDOWN);
-		const chunkedDocsMarkdown = await splitDocuments(TYPE_MARKDOWN, docsMarkdown);
-		await fillVectorDatabase(chunkedDocsMarkdown);
-
-		console.log(`${docsMarkdown.length} markdown files`);
+					console.log(`${docs.length} ${fileType} file(s)`);
+				} catch (error) {
+					console.error(`There was an error when processing ${fileType}:`, error);
+				}
+			}
+		}
 
 		console.log("Vector database has been populated");
 	}

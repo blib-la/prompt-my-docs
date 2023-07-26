@@ -3,34 +3,23 @@ import { DirectoryLoaderPro } from "../docs/loaders/directory-loader-pro.js";
 import { IGNORE_PATHS, PATH_DOCS, TYPE_MARKDOWN, TYPE_TYPESCRIPT } from "../docs/weaviate.js";
 import { UnknownHandling } from "langchain/document_loaders/fs/directory";
 import { TextLoader } from "langchain/document_loaders/fs/text";
+import { config } from "../config/config.js";
 
 export async function loadDocuments(type: string): Promise<Document<Record<string, any>>[]> {
 	let loader = null;
 
-	if (type === TYPE_TYPESCRIPT) {
-		loader = new DirectoryLoaderPro(
-			PATH_DOCS,
-			{
-				".ts": (path: string | Blob) => new TextLoader(path),
-			},
-			IGNORE_PATHS,
-			true,
-			UnknownHandling.Ignore
-		);
-	}
+	const loaders: { [extension: string]: (path: string | Blob) => TextLoader } = {};
+	config.get(`fileTypes.${type}.extensions`).forEach((extension: string) => {
+		loaders[extension] = (path: string | Blob) => new TextLoader(path);
+	});
 
-	if (type === TYPE_MARKDOWN) {
-		loader = new DirectoryLoaderPro(
-			PATH_DOCS,
-			{
-				".md": (path: string | Blob) => new TextLoader(path),
-				".mdx": (path: string | Blob) => new TextLoader(path),
-			},
-			IGNORE_PATHS,
-			true,
-			UnknownHandling.Ignore
-		);
-	}
+	loader = new DirectoryLoaderPro(
+		PATH_DOCS,
+		loaders,
+		config.get(`fileTypes.${type}.ignorePaths`),
+		true,
+		UnknownHandling.Ignore
+	);
 
 	if (loader === null) {
 		throw new Error("No loader specified");

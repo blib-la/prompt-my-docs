@@ -15,6 +15,12 @@ Have you ever found a new library and wanted to ask questions about it? Then loo
 - [Bring your docs](#bring-your-docs)
 - [Start prompt-my-docs](#start-prompt-my-docs)
 - [Under the hood](#under-the-hood)
+- [Config](#config)
+  * [Disabling a File Type](#disabling-a-file-type)
+  * [Changing ignorePaths](#changing-ignorepaths)
+  * [Changing maxDocs and chunkSize](#changing-maxdocs-and-chunksize)
+  * [Changing `docSearchDistance` to make the search more strict](#changing-docsearchdistance-to-make-the-search-more-strict)
+  * [Changing `docSearchDistance` to find more docs](#changing-docsearchdistance-to-find-more-docs)
 - [Do I have to use Next.js?](#do-i-have-to-use-nextjs)
 
 <!-- tocstop -->
@@ -68,6 +74,117 @@ Open the web app via [localhost:3000](http://localhost:3000) (or similar based o
 * You can then run the project and open the web app
 * You can then ask your question and we will use the data from the vector database that is very similar to your prompt to populate the context when we interact with GPT
   * This makes sure that GPT knows about your specific data and can answer questions related to your data
+
+
+## Config
+
+The default config looks like this:
+
+```json
+{
+  "fileTypes": {
+    "markdown": {
+      "enabled": true,
+      "extensions": [".md", ".mdx"],
+      "ignorePaths": ["node_modules", "dist", ".github"],
+      "chunkSize": 1000,
+      "chunkOverlap": 0
+    },
+    "js": {
+      "enabled": true,
+      "extensions": [".js", ".jsx"],
+      "ignorePaths": ["node_modules", "dist", ".github"],
+      "chunkSize": 1000,
+      "chunkOverlap": 0
+    },
+    "ts": {
+      "enabled": true,
+      "extensions": [".ts", ".tsx"],
+      "ignorePaths": ["node_modules", "dist", ".github", ".d.ts"],
+      "chunkSize": 1000,
+      "chunkOverlap": 0
+    }
+  },
+  "vectorDatabase": {
+    "maxDocs": 7,
+    "docSearchDistance": 0.24,
+    "answerSearchDistance": 0.24
+  }
+}
+```
+
+
+You can override the default configuration by creating a `config.json` file in the root of the project.
+
+### Disabling a File Type
+
+This configuration disables the markdown file type.
+
+```json
+{
+  "fileTypes": {
+    "markdown": {
+      "enabled": false
+    }
+  }
+}
+```
+
+### Changing ignorePaths
+
+This configuration changes the ignore paths for markdown files, removing `dist` and `.github` from the ignore list and adding `src`.
+
+```json
+{
+  "fileTypes": {
+    "markdown": {
+      "ignorePaths": ["node_modules", "src"]
+    }
+  }
+}
+```
+
+### Changing maxDocs and chunkSize
+
+This configuration reduces the maximum number of documents retrieved from the vector database to `4` and increases the `chunkSize` for markdown files to `1500`. After changing the configuration, run `npm run update-database` to update the database.
+
+```json
+{
+  "vectorDatabase": {
+    "maxDocs": 4
+  },
+  "fileTypes": {
+    "markdown": {
+      "chunkSize": 1500
+    }
+  }
+}
+```
+
+### Changing `docSearchDistance` to make the search more strict
+
+This configuration reduces the `docSearchDistance` to `0.1`, making searching documents in the vector database more strict. This means that returned documents will be more closely related to the search vector prompt.
+
+```json
+{
+  "vectorDatabase": {
+    "docSearchDistance": 0.1
+  }
+}
+```
+
+
+### Changing `docSearchDistance` to find more docs
+
+This configuration increases the `docSearchDistance` to `0.3`. This change makes the search for documents in the vector database less strict. As a result, more documents are found, but they may be less closely related to the search vector prompt.
+
+```json
+{
+  "vectorDatabase": {
+    "docSearchDistance": 0.3
+  }
+}
+```
 
 
 ## Do I have to use Next.js?
