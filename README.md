@@ -17,9 +17,9 @@ Have you ever found a new library and wanted to ask questions about it? Then loo
 - [Under the hood](#under-the-hood)
 - [Config](#config)
   * [Change the config](#change-the-config)
-  * [Disabling a File Type](#disabling-a-file-type)
-  * [Changing ignorePaths](#changing-ignorepaths)
-  * [Changing maxDocs and chunkSize](#changing-maxdocs-and-chunksize)
+  * [Disabling a file type like `markdown`](#disabling-a-file-type-like-markdown)
+  * [Update `ignorePaths` to remove / add paths](#update-ignorepaths-to-remove--add-paths)
+  * [Handle larger documents with `maxDocs` and `chunkSize`](#handle-larger-documents-with-maxdocs-and-chunksize)
   * [Changing `docSearchDistance` to make the search more strict](#changing-docsearchdistance-to-make-the-search-more-strict)
   * [Changing `docSearchDistance` to find more docs](#changing-docsearchdistance-to-find-more-docs)
 - [Do I have to use Next.js?](#do-i-have-to-use-nextjs)
@@ -118,7 +118,7 @@ The default config looks like this:
 
 You can override the default configuration by creating a `config.json` file at the root of the project.
 
-### Disabling a File Type
+### Disabling a file type like `markdown`
 
 This configuration disables the markdown file type.
 
@@ -132,7 +132,7 @@ This configuration disables the markdown file type.
 }
 ```
 
-### Changing ignorePaths
+### Update `ignorePaths` to remove / add paths
 
 This configuration changes the ignore paths for markdown files, removing `dist` and `.github` from the ignore list and adding `src`.
 
@@ -146,7 +146,7 @@ This configuration changes the ignore paths for markdown files, removing `dist` 
 }
 ```
 
-### Changing maxDocs and chunkSize
+### Handle larger documents with `maxDocs` and `chunkSize`
 
 This configuration reduces the maximum number of documents retrieved from the vector database to `4` and increases the `chunkSize` for markdown files to `1500`. After changing the configuration, run `npm run update-database` to update the database.
 
