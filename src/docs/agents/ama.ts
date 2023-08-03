@@ -8,7 +8,7 @@ import { config } from "@/config/config";
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import { ANSWER, DOCS, store } from "@/docs/weaviate";
+import { ANSWER, store } from "@/docs/weaviate";
 
 dotenvconfig();
 
@@ -38,13 +38,13 @@ const agent = new Agent(
 					priority: "high",
 					rules: [
 						"refer to {{docs}}",
-						"never reference or link to {{previousAnswers}}, just evaluate and use the information",
+						// "never reference or link to {{previousAnswers}}, just evaluate and use the information",
 					],
 				},
 				{
 					priority: "high",
 					rules: [
-						"You have no references? ask the user to rephrase",
+						// "You have no references? ask the user to rephrase",
 						"Are you unsure? Ask the user to rephrase",
 						"only use imports that are in the {{docs}}",
 					],
@@ -84,13 +84,21 @@ function extractPaths(docs: any[]) {
 		});
 }
 
-export async function ama({ question, language }: { question: string; language: string }) {
+export async function ama({
+	question,
+	language,
+	doc,
+}: {
+	question: string;
+	language: string;
+	doc: string;
+}) {
 	const task = {
 		message: `Question: ${question}`,
 		language,
 	};
 
-	const docsResults = await store.searchNearText(DOCS, "content path", [question], {
+	const docsResults = await store.searchNearText(doc, "content path", [question], {
 		distance: config.get("vectorDatabase.docSearchDistance"),
 		limit: config.get("vectorDatabase.maxDocs"),
 	});
@@ -114,13 +122,13 @@ export async function ama({ question, language }: { question: string; language: 
 		originalQuestion: task.message,
 	});
 
-	const docs = extractResults(docsResults, DOCS);
+	const docs = extractResults(docsResults, doc);
 
 	return {
 		message: agent.assign(
 			{
 				...task,
-				previousAnswers: extractResults(answerResults, ANSWER),
+				// previousAnswers: extractResults(answerResults, ANSWER),
 				docs,
 			},
 			ANSWER
