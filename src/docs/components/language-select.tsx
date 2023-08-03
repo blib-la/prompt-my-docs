@@ -15,6 +15,7 @@ import FlagPirate from "@/docs/components/flags/pirate";
 import FlagPl from "@/docs/components/flags/pl";
 import FlagPt from "@/docs/components/flags/pt";
 import FlagUs from "@/docs/components/flags/us";
+import { SxProps, Theme } from "@mui/material/styles";
 
 const options = [
 	{ id: "en-US", value: "english", flag: <FlagUs />, label: "English" },
@@ -31,7 +32,11 @@ const options = [
 	{ id: "en-pirate", value: "pirate", flag: <FlagPirate />, label: "Pirate" },
 ];
 
-export function LanguageSelect() {
+type LanguageSelectProps = {
+	sx?: SxProps<Theme>;
+};
+
+export function LanguageSelect({ sx = [] }: LanguageSelectProps) {
 	const [language, setLanguage] = useAtom(languageAtom);
 	function renderValue(option: SelectOption<string> | null) {
 		if (!option) {
@@ -40,23 +45,22 @@ export function LanguageSelect() {
 
 		return (
 			<>
-				<ListItemDecorator sx={{ mr: 1 }}>
+				<ListItemDecorator>
 					<Avatar variant="outlined" size="sm" sx={{ "--Avatar-size": "20px" }}>
 						{options.find(o => o.value === option.value)?.flag}
 					</Avatar>
 				</ListItemDecorator>
-				{option.label}
 			</>
 		);
 	}
 
 	return (
 		<Select
+			sx={[...(Array.isArray(sx) ? sx : [sx])]}
 			name="language"
 			aria-label="Select a language"
-			variant="soft"
 			value={language}
-			sx={{ flex: 1 }}
+			slotProps={{ listbox: { sx: { zIndex: 4000 } } }}
 			renderValue={renderValue}
 			onChange={(event: SyntheticEvent, value) => {
 				setLanguage(value);

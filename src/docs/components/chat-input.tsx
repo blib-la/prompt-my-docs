@@ -3,33 +3,30 @@ import { Box, CircularProgress, IconButton, Textarea } from "@mui/joy";
 import { useAtom } from "jotai";
 import { useState } from "react";
 import { questionAtom } from "@/docs/atoms";
+import { SxProps, Theme } from "@mui/material/styles";
 
 export interface ChatInputProps {
 	loading: boolean;
-
 	onSubmit(): void;
+	sx?: SxProps<Theme>;
 }
 
-export function ChatInput({ loading, onSubmit }: ChatInputProps) {
+export function ChatInput({ loading, onSubmit, sx = [] }: ChatInputProps) {
 	const [question, setQuestion] = useAtom(questionAtom);
 	const [focus, setFocus] = useState(false);
+
 	return (
-		<Box
-			sx={{
-				position: "relative",
-				zIndex: 2,
-				height: 40,
-			}}
-		>
+		<Box sx={[...(Array.isArray(sx) ? sx : [sx])]}>
 			<Textarea
 				name="question"
-				placeholder="Your question goes here 🤓"
+				placeholder="Prompt my Docs"
 				aria-label="Write your question and press Enter to sumbit"
 				minRows={1}
-				maxRows={focus ? 20 : 1}
+				maxRows={20}
 				variant="soft"
 				value={question}
 				sx={{
+					flex: 2,
 					width: "100%",
 					"&:focus-within": { boxShadow: "md" },
 					".MuiTextarea-endDecorator": {
