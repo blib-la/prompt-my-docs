@@ -13,9 +13,10 @@ export async function populate(force = false, className: string, directory: stri
 				try {
 					const docs = await loadDocuments(fileType, directory);
 					const chunkedDocs = await splitDocuments(fileType, docs);
-					await fillVectorDatabase(chunkedDocs, className);
 
 					console.log(`${directory}: ${docs.length} ${fileType} file(s)`);
+
+					await fillVectorDatabase(chunkedDocs, className);
 				} catch (error) {
 					console.error(`There was an error when processing ${fileType}:`, error);
 				}
