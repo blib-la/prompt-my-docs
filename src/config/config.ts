@@ -4,6 +4,10 @@ import path from "node:path";
 
 const PATH_USER_CONFIG = path.join(process.cwd(), "config.json");
 
+interface GptConfig {
+	temperature: number;
+	maxNewTokens: number;
+}
 interface VectorDatabaseConfig {
 	maxDocs: number;
 	docSearchDistance: number;
@@ -19,6 +23,7 @@ interface FileType {
 }
 
 interface MyConfig {
+	gpt: GptConfig;
 	vectorDatabase: VectorDatabaseConfig;
 
 	fileTypes: {
@@ -27,9 +32,19 @@ interface MyConfig {
 }
 
 const schema: Schema<MyConfig> = {
+	gpt: {
+		temperature: {
+			default: 0.2,
+			format: "Number",
+		},
+		maxNewTokens: {
+			default: 3048,
+			format: "nat",
+		},
+	},
 	vectorDatabase: {
 		maxDocs: {
-			default: 7,
+			default: 6,
 			format: "nat",
 		},
 		docSearchDistance: {
@@ -80,7 +95,7 @@ const schema: Schema<MyConfig> = {
 			extensions: {
 				doc: "File extensions for the js type",
 				format: Array,
-				default: [".js", ".jsx"],
+				default: [".js"],
 			},
 			ignorePaths: {
 				doc: "Paths to ignore for the js type",
@@ -108,7 +123,7 @@ const schema: Schema<MyConfig> = {
 			extensions: {
 				doc: "File extensions for the ts type",
 				format: Array,
-				default: [".ts", ".tsx"],
+				default: [".ts"],
 			},
 			ignorePaths: {
 				doc: "Paths to ignore for the ts type",
