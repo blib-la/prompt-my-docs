@@ -4,7 +4,7 @@ import ChatBot from "@/docs/components/chat-bot";
 
 export default function Page() {
 	return (
-		<Box sx={{ height: "100vh" }}>
+		<Box sx={{ minHeight: "100vh" }}>
 			<ChatBot />
 		</Box>
 	);
