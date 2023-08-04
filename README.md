@@ -32,7 +32,9 @@ Have you ever found a new library and wanted to ask questions about it? Then loo
 
 ## In Action
 
-We cloned [hyv](https://github.com/failfa-st/hyv) into the [docs](/docs) folder and used the prompt `Getting started guide for hyv with a config for GPT-4, so that I can use GPT-4 to get the answer to my question “what is the meaning of life” and see the result printed to the console. Please use ESM syntax.` to generate a guide on how to get started. 
+We cloned [hyv](https://github.com/failfa-st/hyv) into the [docs](/docs) folder and used the following prompt to generate a guide on how to get started with [hyv](https://github.com/failfa-st/hyv):
+
+ `Getting started guide for hyv with a config for GPT-4, so that I can use GPT-4 to get the answer to my question “what is the meaning of life” and see the result printed to the console. Please use ESM syntax.` 
 
 ![Prompt my Docs using hyv](/public/prompt_my_docs_get_started_with_hyv.png)
 
