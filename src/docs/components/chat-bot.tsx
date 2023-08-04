@@ -218,7 +218,7 @@ export default function ChatBot() {
 						>
 							<SimpleMarkdown content={conversation.answer} />
 							{conversation.source && conversation.source.length > 0 && (
-								<CollapsibleBox title="Sources">
+								<CollapsibleBox title="Sources" sx={{ mt: 3 }}>
 									<List size="sm" sx={{ width: "100%" }}>
 										{conversation.source.map((item, index) => (
 											<ListItem key={index}>
