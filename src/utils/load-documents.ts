@@ -6,6 +6,9 @@ import { PATH_DOCS } from "../docs/weaviate.js";
 import { UnknownHandling } from "langchain/document_loaders/fs/directory";
 import { TextLoader } from "langchain/document_loaders/fs/text";
 import { config } from "../config/config.js";
+import { minifyConfig } from "../config/minify-config.js";
+import { minify } from "terser";
+import { minifyTs } from "./minify-ts.js";
 
 export async function loadDocuments(
 	type: string,
@@ -32,14 +35,30 @@ export async function loadDocuments(
 
 	const docs = await loader.load();
 
-	// Fix the source for each document to point to relative path instead of full local path
-	docs.map((doc: { metadata: { source: any } }) => {
-		const { source } = doc.metadata;
+	docs.map(async (doc: { pageContent: string; metadata: { source: any } }) => {
+		const {
+			metadata: { source },
+			pageContent,
+		} = doc;
 
-		const localPath = source.split("/docs/")[1].replaceAll("\\", "/");
+		// Fix the "source" to point to relative path instead of full local path
+		const localPath = source.split("/prompt-my-docs/docs/")[1].replaceAll("\\", "/");
 		const newSource = `docs/${localPath}`;
-
 		doc.metadata.source = newSource;
+
+		// Minify the pageContent to get rid of unneeded new lines, spaces, comments
+		// to save tokens
+		if (type === "js") {
+			try {
+				doc.pageContent = (await minify(pageContent, minifyConfig)).code as string;
+			} catch (error) {}
+		}
+
+		if (type === "ts") {
+			try {
+				doc.pageContent = minifyTs(pageContent);
+			} catch (error) {}
+		}
 
 		return doc;
 	});
