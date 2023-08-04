@@ -1,10 +1,11 @@
 import { store } from "../docs/weaviate.js";
 import { Document } from "langchain/document";
 
-export function fillVectorDatabase(docs: Document<Record<string, any>>[], className: string) {
+export async function fillVectorDatabase(docs: Document<Record<string, any>>[], className: string) {
 	let batcher = store.client.batch.objectsBatcher();
+	let counter = 0;
 
-	docs.map(document => {
+	for (const document of docs) {
 		const {
 			pageContent,
 			metadata: { source },
@@ -14,7 +15,16 @@ export function fillVectorDatabase(docs: Document<Record<string, any>>[], classN
 			class: className,
 			properties: { content: pageContent, path: source },
 		});
-	});
 
-	return batcher.do();
+		counter++;
+
+		if (counter % 100 === 0) {
+			await batcher.do();
+			batcher = store.client.batch.objectsBatcher();
+		}
+	}
+
+	if (counter % 100 !== 0) {
+		await batcher.do();
+	}
 }
