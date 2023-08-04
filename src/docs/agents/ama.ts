@@ -18,12 +18,12 @@ const agent = new Agent(
 	new GPTModelAdapter({
 		model: "gpt-4",
 		historySize: 4,
-		temperature: 1,
-		maxTokens: 4096,
+		temperature: config.get("gpt.temperature"),
+		maxTokens: config.get("gpt.maxNewTokens"),
 		systemInstruction: createInstructionPersona(
 			{
 				profession: "Expert developer",
-				job: ["help and mentor users", "answer the user's questions", "use the {{docs}}"],
+				job: ["help the user", "use the {{docs}}"],
 				skills: [
 					"ability to explain complex things in easy language",
 					"writing clear and concise guides",
@@ -46,7 +46,7 @@ const agent = new Agent(
 					rules: [
 						// "You have no references? ask the user to rephrase",
 						"Are you unsure? Ask the user to rephrase",
-						"only use imports that are in the {{docs}}",
+						"Only use imports that are in the {{docs}}",
 					],
 					reasons: ["hallucinations are prohibited", "Responses must be valid"],
 				},
@@ -94,7 +94,7 @@ export async function ama({
 	doc: string;
 }) {
 	const task = {
-		message: `Question: ${question}`,
+		message: `User prompt: ${question}`,
 		language,
 	};
 
@@ -104,23 +104,24 @@ export async function ama({
 	});
 	console.log("✅  Done getting docs");
 
-	let answerResults = { data: { Get: { [ANSWER]: [] } } };
-	try {
-		answerResults = await store.searchNearText(ANSWER, "answer", [question], {
-			distance: config.get("vectorDatabase.answerSearchDistance"),
-			limit: 1,
-		});
-		console.log("✅  Done getting answers");
-	} catch (error) {
-		console.log("⚠️ No answers set");
-	}
+	// let answerResults = { data: { Get: { [ANSWER]: [] } } };
+	// try {
+	// 	answerResults = await store.searchNearText(ANSWER, "answer", [question], {
+	// 		distance: config.get("vectorDatabase.answerSearchDistance"),
+	// 		limit: 1,
+	// 	});
+	// 	console.log("✅  Done getting answers");
+	// } catch (error) {
+	// 	console.log("⚠️ No answers set");
+	// }
 
-	agent.after = async message => ({
-		...message,
-		// We want to add the original question to allow finding the solution if the same or
-		// similar question is asked.
-		originalQuestion: task.message,
-	});
+	// agent.after = async message => ({
+	// 	...message,
+	// 	// We want to add the original question to allow finding the solution if the same or
+	// 	// similar question is asked.
+	// 	// This is changing the answer and afterwards it will be saved into the store
+	// 	originalQuestion: task.message,
+	// });
 
 	const docs = extractResults(docsResults, doc);
 
