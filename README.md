@@ -96,7 +96,7 @@ The default config looks like this:
 		"answerSearchDistance": 0.24
 	},
 	"gpt": {
-		"temperature": 0.5,
+		"temperature": 0.2,
 		"maxNewTokens": 3048
 	},
 	"fileTypes": {
