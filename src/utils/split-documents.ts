@@ -1,5 +1,4 @@
 import { Document } from "langchain/document";
-import { JavaScriptTextSplitter } from "../docs/splitter/javascript-text-splitter.js";
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 import { config } from "../config/config.js";
 
