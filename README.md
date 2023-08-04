@@ -90,38 +90,38 @@ The default config looks like this:
 
 ```json
 {
-	"vectorDatabase": {
-		"maxDocs": 6,
-		"docSearchDistance": 0.24,
-		"answerSearchDistance": 0.24
-	},
-	"gpt": {
-		"temperature": 0.2,
-		"maxNewTokens": 3048
-	},
-	"fileTypes": {
-		"markdown": {
-			"enabled": true,
-			"extensions": [".md", ".mdx"],
-			"ignorePaths": ["node_modules", "dist", ".github"],
-			"chunkSize": 1000,
-			"chunkOverlap": 0
-		},
-		"js": {
-			"enabled": true,
-			"extensions": [".js"],
-			"ignorePaths": ["node_modules", "dist", ".github"],
-			"chunkSize": 1000,
-			"chunkOverlap": 0
-		},
-		"ts": {
-			"enabled": true,
-			"extensions": [".ts"],
-			"ignorePaths": ["node_modules", "dist", ".github", ".d.ts"],
-			"chunkSize": 1000,
-			"chunkOverlap": 0
-		}
-	}
+  "vectorDatabase": {
+    "maxDocs": 6,
+    "docSearchDistance": 0.24,
+    "answerSearchDistance": 0.24
+  },
+  "gpt": {
+    "temperature": 0.2,
+    "maxNewTokens": 3048
+  },
+  "fileTypes": {
+    "markdown": {
+      "enabled": true,
+      "extensions": [".md", ".mdx"],
+      "ignorePaths": ["node_modules", "dist", ".github"],
+      "chunkSize": 1000,
+      "chunkOverlap": 0
+    },
+    "js": {
+      "enabled": true,
+      "extensions": [".js"],
+      "ignorePaths": ["node_modules", "dist", ".github"],
+      "chunkSize": 1000,
+      "chunkOverlap": 0
+    },
+    "ts": {
+      "enabled": true,
+      "extensions": [".ts"],
+      "ignorePaths": ["node_modules", "dist", ".github", ".d.ts"],
+      "chunkSize": 1000,
+      "chunkOverlap": 0
+    }
+  }
 }
 
 ```
