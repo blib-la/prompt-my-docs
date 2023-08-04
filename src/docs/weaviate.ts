@@ -15,8 +15,4 @@ export const store = new WeaviateAdapter({
 });
 
 export const ANSWER = "Answer";
-export const DOCS = "Docs";
-export const TYPE_TYPESCRIPT = "typescript";
-export const TYPE_MARKDOWN = "markdown";
 export const PATH_DOCS = path.join(process.cwd(), "docs");
-export const IGNORE_PATHS = ["node_modules", "dist", ".github", ".d.ts"];
