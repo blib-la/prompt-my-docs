@@ -1,6 +1,6 @@
 # Prompt my Docs
 
-> Ask questions about any data using GPT. 
+> Ask questions the docs using GPT. 
 
 Have you ever found a new library and wanted to ask questions about it? Then look no further, as you can put any data inside of [docs](/docs) and start prompting. 
 
@@ -22,6 +22,8 @@ Have you ever found a new library and wanted to ask questions about it? Then loo
   * [Handle larger documents with `maxDocs` and `chunkSize`](#handle-larger-documents-with-maxdocs-and-chunksize)
   * [Changing `docSearchDistance` to make the search more strict](#changing-docsearchdistance-to-make-the-search-more-strict)
   * [Changing `docSearchDistance` to find more docs](#changing-docsearchdistance-to-find-more-docs)
+  * [More or less variations in the output with `temperature`](#more-or-less-variations-in-the-output-with-temperature)
+  * [Control the length of the generated output with `maxNewTokens`](#control-the-length-of-the-generated-output-with-maxnewtokens)
 - [Do I have to use Next.js?](#do-i-have-to-use-nextjs)
 
 <!-- tocstop -->
@@ -30,7 +32,7 @@ Have you ever found a new library and wanted to ask questions about it? Then loo
 
 ## In Action
 
-We cloned [hyv](https://github.com/failfa-st/hyv) into the [docs](/docs) folder and used the prompt `Getting started example code for hyv in typescript so that I can use GPT-4 and ask a question.` to generate a guide on how to get started. 
+We cloned [hyv](https://github.com/failfa-st/hyv) into the [docs](/docs) folder and used the prompt `Getting started guide for hyv with a config for GPT-4, so that I can use GPT-4 to get the answer to my question “what is the meaning of life” and see the result printed to the console. Please use ESM syntax.` to generate a guide on how to get started. 
 
 ![Prompt my Docs using hyv](/public/prompt_my_docs_get_started_with_hyv.png)
 
@@ -85,35 +87,40 @@ The default config looks like this:
 
 ```json
 {
-  "fileTypes": {
-    "markdown": {
-      "enabled": true,
-      "extensions": [".md", ".mdx"],
-      "ignorePaths": ["node_modules", "dist", ".github"],
-      "chunkSize": 1000,
-      "chunkOverlap": 0
-    },
-    "js": {
-      "enabled": true,
-      "extensions": [".js", ".jsx"],
-      "ignorePaths": ["node_modules", "dist", ".github"],
-      "chunkSize": 1000,
-      "chunkOverlap": 0
-    },
-    "ts": {
-      "enabled": true,
-      "extensions": [".ts", ".tsx"],
-      "ignorePaths": ["node_modules", "dist", ".github", ".d.ts"],
-      "chunkSize": 1000,
-      "chunkOverlap": 0
-    }
-  },
-  "vectorDatabase": {
-    "maxDocs": 7,
-    "docSearchDistance": 0.24,
-    "answerSearchDistance": 0.24
-  }
+	"vectorDatabase": {
+		"maxDocs": 6,
+		"docSearchDistance": 0.24,
+		"answerSearchDistance": 0.24
+	},
+	"gpt": {
+		"temperature": 0.5,
+		"maxNewTokens": 3048
+	},
+	"fileTypes": {
+		"markdown": {
+			"enabled": true,
+			"extensions": [".md", ".mdx"],
+			"ignorePaths": ["node_modules", "dist", ".github"],
+			"chunkSize": 1000,
+			"chunkOverlap": 0
+		},
+		"js": {
+			"enabled": true,
+			"extensions": [".js"],
+			"ignorePaths": ["node_modules", "dist", ".github"],
+			"chunkSize": 1000,
+			"chunkOverlap": 0
+		},
+		"ts": {
+			"enabled": true,
+			"extensions": [".ts"],
+			"ignorePaths": ["node_modules", "dist", ".github", ".d.ts"],
+			"chunkSize": 1000,
+			"chunkOverlap": 0
+		}
+	}
 }
+
 ```
 
 ### Change the config
@@ -192,6 +199,31 @@ This configuration increases the `docSearchDistance` to `0.3`. This change makes
 }
 ```
 
+### More or less variations in the output with `temperature`
+
+The temperature parameter controls the randomness of the GPT's output. A higher temperature value results in more random outputs, while a lower temperature value makes the outputs more deterministic and focused. You might want to adjust this parameter to fine-tune the balance between randomness and determinism in the GPT's responses.
+
+```json
+{
+  "gpt": {
+    "temperature": 0.6
+  }
+}
+```
+
+### Control the length of the generated output with `maxNewTokens`
+
+The `maxNewTokens` parameter controls the maximum length of the output from GPT. By adjusting this value, you can control how much text the GPT generates in response to an input. If you're finding that the responses are too short or too long, you can tweak this setting. 
+
+The context of GPT is defined by combining the tokens of the input (like the user prompt) with the tokens needed to respond (in this case controlled by `maxNewTokens`). For GPT-4 8k, the sum of both values can't exceed 8096 tokens. You will run into an error if you request a bigger context size. 
+
+```json
+{
+  "gpt": {
+    "maxNewTokens": 1024
+  }
+}
+```
 
 ## Do I have to use Next.js?
 
