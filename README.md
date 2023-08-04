@@ -46,6 +46,7 @@ We cloned [hyv](https://github.com/failfa-st/hyv) into the [docs](/docs) folder 
 * Install dependencies: `npm i`
 * Register for a [Weaviate sandbox](https://weaviate.io/developers/weaviate/quickstart#create-a-weaviate-instance) and obtain the host of your sandbox and the API Key
 * Create an OpenAI account and create an [API Key](https://platform.openai.com/account/api-keys)
+  * 🚨 It is recommended to have access to GPT-4, as this is what we used during development of **Prompt my Docs**. If you don't have access yet, see [How can I access GPT-4](https://help.openai.com/en/articles/7102672-how-can-i-access-gpt-4)
 * Create a `.env` based on `.env.example` and put the API keys (both Weaviate & OpenAI) + Weaviate host inside
   
 ## Bring your docs
