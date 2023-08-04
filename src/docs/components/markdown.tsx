@@ -7,7 +7,7 @@ import { dark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 export const simpleComponents = {
 	h1({ children }) {
 		return (
-			<Typography level="h1" my={3.5}>
+			<Typography level="h1" mb={3.5} mt={0}>
 				{children}
 			</Typography>
 		);
