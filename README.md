@@ -20,10 +20,10 @@ Have you ever found a new library and wanted to ask questions about it? Then loo
   * [Disabling a file type like `markdown`](#disabling-a-file-type-like-markdown)
   * [Update `ignorePaths` to remove / add paths](#update-ignorepaths-to-remove--add-paths)
   * [Handle larger documents with `maxDocs` and `chunkSize`](#handle-larger-documents-with-maxdocs-and-chunksize)
-  * [Changing `docSearchDistance` to make the search more strict](#changing-docsearchdistance-to-make-the-search-more-strict)
-  * [Changing `docSearchDistance` to find more docs](#changing-docsearchdistance-to-find-more-docs)
-  * [More or less variations in the output with `temperature`](#more-or-less-variations-in-the-output-with-temperature)
-  * [Control the length of the generated output with `maxNewTokens`](#control-the-length-of-the-generated-output-with-maxnewtokens)
+  * [Make the search more/less strict with `docSearchDistance`](#make-the-search-moreless-strict-with-docsearchdistance)
+  * [Find more/less docs with `docSearchDistance`](#find-moreless-docs-with-docsearchdistance)
+  * [Have more/less variations in the output with `temperature`](#have-moreless-variations-in-the-output-with-temperature)
+  * [Spend more/less tokens for talking with GPT with `maxNewTokens`](#spend-moreless-tokens-for-talking-with-gpt-with-maxnewtokens)
 - [Do I have to use Next.js?](#do-i-have-to-use-nextjs)
 
 <!-- tocstop -->
