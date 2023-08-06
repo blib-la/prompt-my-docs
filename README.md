@@ -86,7 +86,7 @@ Open the web app via [localhost:3000](http://localhost:3000) (or similar based o
 
 ## Config
 
-The default config looks like this:
+The [default config](src/config/config.ts) looks like this:
 
 ```json
 {
