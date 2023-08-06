@@ -51,7 +51,7 @@ We cloned [hyv](https://github.com/failfa-st/hyv) into the [docs](/docs) folder 
   
 ## Bring your docs
 
-Add all the files that you want to search into the [docs](/docs) folder (currently only all `fileTypes` (like `js`, `ts` or `md`) that are defined in the [config](#config), please open an issue for more!)
+Add all the files that you want to search into the [docs](/docs) folder (currently only all `dataType` (like `js`, `ts` or `md`) that are defined in the [config](#config), please open an issue for more!)
 
 For example you can clone a repo that you would love to learn about into the [docs](/docs) folder, like [hyv](https://github.com/failfa-st/hyv). 
 
@@ -76,7 +76,7 @@ Open the web app via [localhost:3000](http://localhost:3000) (or similar based o
 
 ## Under the hood
 
-* We read [all your data](https://github.com/failfa-st/prompt-my-docs/issues/1) from the "docs" folder, currently only all `fileTypes` (like `js`, `ts` or `md`) that are defined in the [config](#config)
+* We read [all your data](https://github.com/failfa-st/prompt-my-docs/issues/1) from the "docs" folder, currently only all `dataType` (like `js`, `ts` or `md`) that are defined in the [config](#config)
 * Your data will be converted into a vector and saved into the vector database (e.g. weaviate)
   * This needs to be done before you run the project for the first time or when your data is changing
 * You can then run the project and open the web app
@@ -99,7 +99,7 @@ The [default config](src/config/config.ts) looks like this:
     "temperature": 0.2,
     "maxNewTokens": 3048
   },
-  "fileTypes": {
+  "dataType": {
     "markdown": {
       "enabled": true,
       "extensions": [".md", ".mdx"],
@@ -138,7 +138,7 @@ This configuration disables the markdown file type.
 
 ```json
 {
-  "fileTypes": {
+  "dataType": {
     "markdown": {
       "enabled": false
     }
@@ -152,7 +152,7 @@ This configuration changes the ignore paths for markdown files, removing `dist` 
 
 ```json
 {
-  "fileTypes": {
+  "dataType": {
     "markdown": {
       "ignorePaths": ["node_modules", "src"]
     }
@@ -169,7 +169,7 @@ This configuration reduces the maximum number of documents retrieved from the ve
   "vectorDatabase": {
     "maxDocs": 4
   },
-  "fileTypes": {
+  "dataType": {
     "markdown": {
       "chunkSize": 1500
     }

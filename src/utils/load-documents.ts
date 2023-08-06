@@ -2,7 +2,7 @@ import path from "node:path";
 
 import { Document } from "langchain/document";
 import { DirectoryLoaderPro } from "../docs/loaders/directory-loader-pro.js";
-import { PATH_DOCS } from "../docs/weaviate.js";
+import { PATH_DOCS, PATH_SPLIT } from "../docs/weaviate.js";
 import { UnknownHandling } from "langchain/document_loaders/fs/directory";
 import { TextLoader } from "langchain/document_loaders/fs/text";
 import { config } from "../config/config.js";
@@ -17,14 +17,14 @@ export async function loadDocuments(
 	let loader = null;
 
 	const loaders: { [extension: string]: (path: string | Blob) => TextLoader } = {};
-	config.get(`fileTypes.${type}.extensions`).forEach((extension: string) => {
+	config.get(`dataType.${type}.extensions`).forEach((extension: string) => {
 		loaders[extension] = (path: string | Blob) => new TextLoader(path);
 	});
 
 	loader = new DirectoryLoaderPro(
 		path.join(PATH_DOCS, directory),
 		loaders,
-		config.get(`fileTypes.${type}.ignorePaths`),
+		config.get(`dataType.${type}.ignorePaths`),
 		true,
 		UnknownHandling.Ignore
 	);
@@ -42,8 +42,8 @@ export async function loadDocuments(
 		} = doc;
 
 		// Fix the "source" to point to relative path instead of full local path
-		const localPath = source.split("/prompt-my-docs/docs/")[1].replaceAll("\\", "/");
-		const newSource = `docs/${localPath}`;
+		const localPath = source.split(PATH_SPLIT)[1].replaceAll("\\", "/");
+		const newSource = `docs${localPath}`;
 		doc.metadata.source = newSource;
 
 		// Minify the pageContent to get rid of unneeded new lines, spaces, comments

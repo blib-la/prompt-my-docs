@@ -6,10 +6,10 @@ import { config } from "../config/config.js";
 export async function populate(force = false, className: string, directory: string) {
 	// If we want to refresh (force) the new dataset, we need to populate the vector store
 	if (force) {
-		const fileTypes = config.get("fileTypes");
+		const dataType = config.get("dataType");
 
-		for (const fileType in fileTypes) {
-			if (fileTypes[fileType].enabled) {
+		for (const fileType in dataType) {
+			if (dataType[fileType].enabled) {
 				try {
 					const docs = await loadDocuments(fileType, directory);
 					const chunkedDocs = await splitDocuments(fileType, docs);

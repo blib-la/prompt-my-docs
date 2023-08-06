@@ -1,4 +1,4 @@
-import convict, { Config, Schema } from "convict";
+import convict, { Config, InternalSchema, Schema } from "convict";
 import fs from "node:fs";
 import path from "node:path";
 
@@ -26,7 +26,7 @@ interface MyConfig {
 	gpt: GptConfig;
 	vectorDatabase: VectorDatabaseConfig;
 
-	fileTypes: {
+	dataType: {
 		[key: string]: FileType;
 	};
 }
@@ -56,7 +56,7 @@ const schema: Schema<MyConfig> = {
 			format: "Number",
 		},
 	},
-	fileTypes: {
+	dataType: {
 		markdown: {
 			enabled: {
 				doc: "Whether the markdown type is enabled",
