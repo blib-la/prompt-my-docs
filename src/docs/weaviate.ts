@@ -16,3 +16,5 @@ export const store = new WeaviateAdapter({
 
 export const ANSWER = "Answer";
 export const PATH_DOCS = path.join(process.cwd(), "docs");
+
+export const PATH_SPLIT = path.join("prompt-my-docs", "docs");
