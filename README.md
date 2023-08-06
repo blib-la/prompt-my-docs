@@ -1,8 +1,8 @@
 # Prompt my Docs
 
-> Ask questions the docs using GPT. 
+> Talk with your docs and GPT at the same time
 
-Have you ever found a new library and wanted to ask questions about it? Then look no further, as you can put any data inside of [docs](/docs) and start prompting. 
+Have you ever found a new library and wanted to ask questions about it? Or stumbled upon some undocumented code and have no idea what happens there? Then look no further, as you can put [any data](https://github.com/failfa-st/prompt-my-docs/issues/1) inside of [docs](/docs) and start prompting. 
 
 [![Discord](https://img.shields.io/discord/1091306623819059300?color=7289da&label=Discord&logo=discord&logoColor=fff&style=for-the-badge)](https://discord.com/invite/m3TBB9XEkb)
 
@@ -76,7 +76,7 @@ Open the web app via [localhost:3000](http://localhost:3000) (or similar based o
 
 ## Under the hood
 
-* We read all your data from the "docs" folder, currently only all `fileTypes` (like `js`, `ts` or `md`) that are defined in the [config](#config)
+* We read [all your data](https://github.com/failfa-st/prompt-my-docs/issues/1) from the "docs" folder, currently only all `fileTypes` (like `js`, `ts` or `md`) that are defined in the [config](#config)
 * Your data will be converted into a vector and saved into the vector database (e.g. weaviate)
   * This needs to be done before you run the project for the first time or when your data is changing
 * You can then run the project and open the web app
