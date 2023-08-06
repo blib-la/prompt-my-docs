@@ -1,4 +1,4 @@
-import { ANSWER, store, PATH_DOCS } from "../docs/weaviate.js";
+import { ANSWER, PATH_DOCS } from "../docs/weaviate.js";
 import { createClass } from "./create-class.js";
 import { getDirectories } from "./get-directories.js";
 import { populate } from "./populate.js";
