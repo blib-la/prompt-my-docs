@@ -177,7 +177,7 @@ This configuration reduces the maximum number of documents retrieved from the ve
 }
 ```
 
-### Changing `docSearchDistance` to make the search more strict
+### Make the search more/less strict with `docSearchDistance`
 
 This configuration reduces the `docSearchDistance` to `0.1`, making searching documents in the vector database more strict. This means that returned documents will be more closely related to the search vector prompt.
 
@@ -190,7 +190,7 @@ This configuration reduces the `docSearchDistance` to `0.1`, making searching do
 ```
 
 
-### Changing `docSearchDistance` to find more docs
+### Find more/less docs with `docSearchDistance`
 
 This configuration increases the `docSearchDistance` to `0.3`. This change makes the search for documents in the vector database less strict. As a result, more documents are found, but they may be less closely related to the search vector prompt.
 
@@ -202,7 +202,7 @@ This configuration increases the `docSearchDistance` to `0.3`. This change makes
 }
 ```
 
-### More or less variations in the output with `temperature`
+### Have more/less variations in the output with `temperature`
 
 The temperature parameter controls the randomness of the GPT's output. A higher temperature value results in more random outputs, while a lower temperature value makes the outputs more deterministic and focused. You might want to adjust this parameter to fine-tune the balance between randomness and determinism in the GPT's responses.
 
@@ -214,7 +214,7 @@ The temperature parameter controls the randomness of the GPT's output. A higher 
 }
 ```
 
-### Control the length of the generated output with `maxNewTokens`
+### Spend more/less tokens for talking with GPT with `maxNewTokens`
 
 The `maxNewTokens` parameter controls the maximum length of the output from GPT. By adjusting this value, you can control how much text the GPT generates in response to an input. If you're finding that the responses are too short or too long, you can tweak this setting. 
 
