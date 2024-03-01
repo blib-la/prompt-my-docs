@@ -8,10 +8,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
 		case "POST":
 			try {
 				const { question, language, doc } = request.body;
-				const hyvResponse = await ama({ question, language, doc });
-
-				const message = await hyvResponse.message;
-				const paths = hyvResponse.paths;
+				const { message, paths } = await ama({ question, language, doc });
 
 				response.status(200).json({ message, paths });
 			} catch (error) {

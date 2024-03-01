@@ -7,6 +7,7 @@ const PATH_USER_CONFIG = path.join(process.cwd(), "config.json");
 interface GptConfig {
 	temperature: number;
 	maxNewTokens: number;
+	model: string;
 }
 interface VectorDatabaseConfig {
 	maxDocs: number;
@@ -33,12 +34,13 @@ interface MyConfig {
 
 const schema: Schema<MyConfig> = {
 	gpt: {
+		model: "gpt-4-1106-preview",
 		temperature: {
 			default: 0.2,
 			format: "Number",
 		},
 		maxNewTokens: {
-			default: 3048,
+			default: 4096,
 			format: "nat",
 		},
 	},
@@ -48,7 +50,7 @@ const schema: Schema<MyConfig> = {
 			format: "nat",
 		},
 		docSearchDistance: {
-			default: 0.24,
+			default: 0.34,
 			format: "Number",
 		},
 		answerSearchDistance: {
@@ -77,7 +79,7 @@ const schema: Schema<MyConfig> = {
 			chunkSize: {
 				doc: "Chunk size for the markdown type",
 				format: "nat",
-				default: 1000,
+				default: 3000,
 			},
 			chunkOverlap: {
 				doc: "Chunk overlap for the markdown type",
@@ -137,6 +139,34 @@ const schema: Schema<MyConfig> = {
 			},
 			chunkOverlap: {
 				doc: "Chunk overlap for the ts type",
+				format: "nat",
+				default: 0,
+			},
+		},
+		py: {
+			enabled: {
+				doc: "Whether the ts type is enabled",
+				format: Boolean,
+				default: true,
+				env: "PYTHON_ENABLED",
+			},
+			extensions: {
+				doc: "File extensions for the py type",
+				format: Array,
+				default: [".py"],
+			},
+			ignorePaths: {
+				doc: "Paths to ignore for the py type",
+				format: Array,
+				default: ["node_modules", "dist", ".github", "__init__"],
+			},
+			chunkSize: {
+				doc: "Chunk size for the py type",
+				format: "nat",
+				default: 3000,
+			},
+			chunkOverlap: {
+				doc: "Chunk overlap for the py type",
 				format: "nat",
 				default: 0,
 			},

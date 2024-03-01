@@ -1,70 +1,16 @@
 import { inspect } from "node:util";
 
-import { Agent } from "@hyv/core";
-import { GPTModelAdapter } from "@hyv/openai";
-import { createInstructionPersona } from "@hyv/openai";
 import { config as dotenvconfig } from "dotenv";
 import { config } from "@/config/config";
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { ANSWER, store } from "@/docs/weaviate";
+import { openai } from "@/ions/openai";
 
 dotenvconfig();
 
 inspect.defaultOptions.depth = null;
-
-const agent = new Agent(
-	new GPTModelAdapter({
-		model: "gpt-4",
-		historySize: 4,
-		temperature: config.get("gpt.temperature"),
-		maxTokens: config.get("gpt.maxNewTokens"),
-		systemInstruction: createInstructionPersona(
-			{
-				profession: "Expert developer",
-				job: ["help the user", "use the {{docs}}"],
-				skills: [
-					"ability to explain complex things in easy language",
-					"writing clear and concise guides",
-					"writing simple code examples",
-					"writing unique and customized code examples",
-					"paraphrasing resourced content",
-				],
-			},
-			[
-				{ priority: "high", rule: "ALWAYS respond in the requested {{language}}" },
-				{
-					priority: "high",
-					rules: [
-						"refer to {{docs}}",
-						// "never reference or link to {{previousAnswers}}, just evaluate and use the information",
-					],
-				},
-				{
-					priority: "high",
-					rules: [
-						// "You have no references? ask the user to rephrase",
-						"Are you unsure? Ask the user to rephrase",
-						"Only use imports that are in the {{docs}}",
-					],
-					reasons: ["hallucinations are prohibited", "Responses must be valid"],
-				},
-				{ priority: "normal", rule: "ONLY complete responses" },
-			],
-			{
-				thoughts: "your thoughts about the task",
-				assurance: "make sure to use this template",
-				answer: "a clear and reasonable answer (structured and sectioned (with headlines) Markdown with pretty-print code)",
-			},
-			{ format: "json" }
-		),
-	}),
-	{
-		store,
-		verbosity: 0,
-	}
-);
 
 interface ResultsObject {
 	data: {
@@ -94,7 +40,7 @@ export async function ama({
 	doc: string;
 }) {
 	const task = {
-		message: `User prompt: ${question}`,
+		message: `${question}`,
 		language,
 	};
 
@@ -104,36 +50,96 @@ export async function ama({
 	});
 	console.log("✅  Done getting docs");
 
-	// let answerResults = { data: { Get: { [ANSWER]: [] } } };
-	// try {
-	// 	answerResults = await store.searchNearText(ANSWER, "answer", [question], {
-	// 		distance: config.get("vectorDatabase.answerSearchDistance"),
-	// 		limit: 1,
-	// 	});
-	// 	console.log("✅  Done getting answers");
-	// } catch (error) {
-	// 	console.log("⚠️ No answers set");
-	// }
+	const system = `You are a mentor for a wide range of topics with these skills:
+- ability to explain complex things in easy language
+- writing clear and concise guides
+- writing simple code examples
+- paraphrasing resourced content
+- respond ONLY in valid markdown format
+- always respond in requested LANGUAGE
+- use the provided DOCS for your answer
+- ask the user to rephrase if something is not clear
+- hallucinations are prohibited
+`;
 
-	// agent.after = async message => ({
-	// 	...message,
-	// 	// We want to add the original question to allow finding the solution if the same or
-	// 	// similar question is asked.
-	// 	// This is changing the answer and afterwards it will be saved into the store
-	// 	originalQuestion: task.message,
-	// });
+	//
+	// 	const system = `**PRECISELY act as this persona**:
+	// {"profession":"Expert developer","job":["help the user","use the {{docs}}"],"skills":
+	//["ability to explain complex things in easy language","writing clear and concise guides","writing simple code examples","writing unique and customized code examples","paraphrasing resourced content"]}
+
+	// **STRICTLY follow these rules**:
+	// [{"importance":"highest","rule":"ONLY respond using **valid** Markdown format"},{"importance":"highest","rule":"ONLY respond in form of the provided **TEMPLATE**"},{"priority":"high","rule":"ALWAYS respond in the requested {{language}}"},{"priority":"high","rules":["refer to {{docs}}"]},{"priority":"high","rules":["Are you unsure? Ask the user to rephrase","Only use imports that are in the {{docs}}"],"reasons":["hallucinations are prohibited","Responses must be valid"]},{"priority":"normal","rule":"ONLY complete responses"}]
+	// `;
 
 	const docs = extractResults(docsResults, doc);
 
+	const response = await openai.chat.completions.create({
+		messages: [
+			{ role: "system", content: system },
+			{ role: "system", content: `## DOCS\n\n${JSON.stringify(docs)}` },
+			{ role: "user", content: `## LANGUAGE\n\n${task.language}` },
+			{ role: "user", content: `## TASK\n\n${task.message}` },
+		],
+		model: "gpt-4-1106-preview",
+		// eslint-disable-next-line camelcase
+		max_tokens: 4048,
+	});
+
+	if (
+		!response.choices ||
+		response.choices.length === 0 ||
+		!response.choices[0].message ||
+		response.choices[0].message.content === null
+	) {
+		throw new Error("No valid choices available in the response");
+	}
+
+	const { content } = response.choices[0].message;
+
+	console.log(content);
+	console.log("---------------------------------------------------------");
+	console.log(extractMarkdownContent(content));
+
 	return {
-		message: agent.assign(
-			{
-				...task,
-				// previousAnswers: extractResults(answerResults, ANSWER),
-				docs,
-			},
-			ANSWER
-		),
+		message: extractMarkdownContent(content),
 		paths: extractPaths(docs),
 	};
+}
+
+function extractMarkdownContent(input: string): string {
+	const lines = input.split("\n");
+	let isInsideMarkdownBlock = false;
+	let extractedContent = "";
+	let codeBlockDepth = 0;
+	let markdownBlockFound = false;
+
+	for (const line of lines) {
+		// Check if the markdown block starts
+		if (line.trim() === "```markdown") {
+			isInsideMarkdownBlock = true;
+			markdownBlockFound = true;
+			continue;
+		}
+
+		// Check if the markdown block ends
+		if (line.trim() === "```" && isInsideMarkdownBlock) {
+			if (codeBlockDepth === 0) {
+				break;
+			} else {
+				codeBlockDepth--;
+			}
+		}
+
+		if (isInsideMarkdownBlock) {
+			// Handle nested code blocks
+			if (line.trim().startsWith("```")) {
+				codeBlockDepth++;
+			}
+
+			extractedContent += line + "\n";
+		}
+	}
+
+	// Return the original string if no markdown block was found
+	return markdownBlockFound ? extractedContent.trim() : input;
 }

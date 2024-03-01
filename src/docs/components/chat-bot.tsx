@@ -69,7 +69,7 @@ export function Bot({
 
 			if (onConversation) {
 				onConversation({
-					answer: data.message.message.answer,
+					answer: data.message,
 					source: data.paths,
 					question,
 				});

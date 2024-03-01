@@ -20,6 +20,12 @@ export async function splitDocuments(type: string, docs: Document<Record<string,
 					chunkOverlap: config.get(`dataType.${type}.chunkOverlap`),
 				});
 				break;
+
+			case "py":
+				splitter = RecursiveCharacterTextSplitter.fromLanguage("python", {
+					chunkSize: config.get(`dataType.${type}.chunkSize`),
+					chunkOverlap: config.get(`dataType.${type}.chunkOverlap`),
+				});
 		}
 	}
 
